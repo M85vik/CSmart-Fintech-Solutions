@@ -1,4 +1,4 @@
-const sendEmail = require('./emailService.js');
+const {sendEmail} = require('./emailService.js');
 
 (async () => {
   try {
