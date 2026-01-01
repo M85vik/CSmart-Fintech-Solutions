@@ -6,7 +6,7 @@ const UNOSEND_API_URL = "https://www.unosend.co/api/v1/emails";
 
 const UNOSEND_API_KEY=process.env.UNOSEND_API_KEY
 const FROM_EMAIL=process.env.FROM_EMAIL;
-c
+
 
 if(!UNOSEND_API_KEY) throw new Error("Email Service Environment Variable Not Loaded...");
 if(!FROM_EMAIL) throw new Error("Sender Email not loaded...");
