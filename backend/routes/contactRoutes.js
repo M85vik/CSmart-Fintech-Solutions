@@ -10,9 +10,9 @@ const { protect } = require('../middleware/authMiddleware');
 
 // Public route for anyone to submit the form
 // Protected route for admin to view all submissions
-router.route('/')
-  .post(createContact)
-  .get(protect, getContacts);
+router.route('/').post(createContact);
+
+  router.route('/').get(protect, getContacts);
 
 // Protected route for admin to delete a submission
 router.route('/:id').delete(protect, deleteContact);

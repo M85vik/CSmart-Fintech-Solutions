@@ -6,7 +6,7 @@ const {sendEmail} = require('./emailService.js');
       to: ["vikas.sharma0b@gmail.com"],
       subject: "Verify Team",
       html: "<h2>Email sent successfully 🚀</h2>",
-      text: "From our Team someone will contact soon...",
+     
     });
 
     console.log("Email service response:", response?.data);
