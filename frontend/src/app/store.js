@@ -8,6 +8,7 @@ import testimonialReducer from '../features/testimonials/testimonialSlice';
 import contactReducer from '../features/contacts/contactSlice';
 import bannerReducer from '../features/banners/bannerSlice';
 import vehicleReducer from '../features/vehicles/vehicleSlice';
+import userServiceReducer from '../features/userServices/userServiceSlice';
 export const store = configureStore({
   // The `reducer` object maps slice names to their reducer functions.
   // The key you use here (e.g., "banner") is what you will use to access the state
@@ -19,5 +20,6 @@ export const store = configureStore({
     contact: contactReducer,
     banner: bannerReducer,
     vehicle: vehicleReducer,
+    userService: userServiceReducer,
   },
 });

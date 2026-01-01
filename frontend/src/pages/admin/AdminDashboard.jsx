@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaRegNewspaper, FaRegCommentDots, FaRegAddressCard, FaBullhorn, FaCar } from 'react-icons/fa';
+import { FaRegNewspaper, FaRegCommentDots, FaRegAddressCard, FaBullhorn, FaCar, FaHandPaper, FaHandsHelping, FaHandHoldingUsd, FaListAlt } from 'react-icons/fa';
 
 const adminLinks = [
   { title: "Manage Banners", description: "Update the homepage carousel slides.", link: "/admin/banners", icon: FaBullhorn, color: "bg-purple-100 text-purple-600" },
@@ -16,6 +16,8 @@ const adminLinks = [
     icon: FaCar,
     color: "bg-orange-100 text-orange-600"
   },
+  { title: "Assign New Service", description: "Add a loan/insurance to a user.", link: "/admin/services/new", icon: FaHandHoldingUsd, color: "bg-green-100 text-green-600" },
+  { title: "Master Service List", description: "View all user services & freeze accounts.", link: "/admin/services/all", icon: FaListAlt, color: "bg-red-100 text-red-600" },
 ];
 
 export default function AdminDashboard() {

@@ -124,8 +124,15 @@ export default function Login() {
       toast.error(message || 'Login failed. Please check your credentials.');
     }
     if (isSuccess || user) {
-      navigate('/admin'); // Redirect to admin dashboard on success
+      // 1. Check if the user is the specific admin
+      if (user.email === 'admin@e3n.com') {
+        navigate('/admin');
+      } else {
+        // 2. Everyone else goes to the user dashboard
+        navigate('/dashboard');
+      }
     }
+
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 

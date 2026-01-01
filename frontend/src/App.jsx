@@ -27,6 +27,8 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import { Toaster } from 'react-hot-toast';
 import VehicleManager from './pages/admin/VehicleManager';
+import ServiceManager from './pages/admin/ServiceManager';
+import ServiceMasterList from './pages/admin/ServiceMasterList';
 
 
 function App() {
@@ -61,7 +63,9 @@ function App() {
             <Route path="/admin/testimonials" element={<TestimonialManager />} />
             <Route path="/admin/vehicles" element={<VehicleManager />} />
             <Route path="/admin/messages" element={<MessageManager />} />
-            
+            <Route path="/admin/services/new" element={<ServiceManager />} />
+            <Route path="/admin/services/all" element={<ServiceMasterList />} />
+
           </Route>
         </Routes>
       </main>

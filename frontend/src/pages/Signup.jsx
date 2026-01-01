@@ -1,4 +1,3 @@
-// File: src/pages/Signup.jsx
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
@@ -7,19 +6,18 @@ import { motion } from 'framer-motion';
 import { FaUserPlus, FaEye, FaEyeSlash, FaArrowRight } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import Spinner from '../components/shared/Spinner';
-import { login, reset } from '../features/auth/authSlice';
+import { register, reset } from '../features/auth/authSlice';
 
 export default function Signup() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    panId: '',
+    panId: '', 
     password: '',
     confirmPassword: '',
     agreeTerms: false,
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState({});
 
   const { name, email, panId, password, confirmPassword, agreeTerms } = formData;
 
@@ -32,11 +30,11 @@ export default function Signup() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message || 'Registration failed. Please try again.');
+      toast.error(message || 'Registration failed.');
     }
     if (isSuccess || user) {
       navigate('/dashboard'); 
-      toast.success('Account created successfully! Checking your credit score...');
+      toast.success('Account created successfully!');
     }
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
@@ -48,158 +46,104 @@ export default function Signup() {
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
-  
-  // --- This is the validation logic from the last version ---
-  const validateForm = () => {
-    const newErrors = {};
-    if (!name) newErrors.name = 'Full Name is required.';
-    if (!email) newErrors.email = 'Email is required.';
-    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Email address is invalid.';
-    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    if (!panId) newErrors.panId = 'PAN ID is required.';
-    else if (!panRegex.test(panId.toUpperCase())) newErrors.panId = 'Please enter a valid 10-character PAN ID.';
-    if (!password) newErrors.password = 'Password is required.';
-    else if (password.length < 8) newErrors.password = 'Password must be at least 8 characters long.';
-    if (password !== confirmPassword) newErrors.confirmPassword = 'Passwords do not match.';
-    if (!agreeTerms) toast.error('You must agree to the terms and conditions.');
-    return newErrors;
-  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match');
       return;
     }
-    setErrors({});
-    const userData = { name, email, panId: panId.toUpperCase(), password };
-    dispatch(login({ email, password }));
+    if (!agreeTerms) {
+      toast.error('Please agree to the terms');
+      return;
+    }
+
+    const userData = { name, email, password };
+    dispatch(register(userData));
   };
 
   return (
-    <>
-      <Helmet>
-        <title>Sign Up for Free Credit Score | Verity Finance</title>
-        <meta name="description" content="Create your Verity Finance account to check your free credit score instantly and unlock personalized financial offers." />
-      </Helmet>
-
-      <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950 p-4 sm:p-6">
-        <motion.div /* ...background animation... */ />
-
-        <motion.div
-          className="relative z-10 w-full max-w-lg bg-gray-800 border border-gray-700 rounded-xl shadow-2xl p-6 sm:p-10"
-          initial={{ opacity: 0, y: 50 }}
+      <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <Helmet><title>Sign Up | Verity Finance</title></Helmet>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
+          className="sm:mx-auto sm:w-full sm:max-w-md text-center"
         >
-          {/* --- The header with the icon is restored --- */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }} 
-            animate={{ opacity: 1, scale: 1 }} 
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-center mb-8"
-          >
-            <h1 className="text-4xl font-extrabold text-white mb-2">
-                <FaUserPlus className="inline mr-3 text-brand-secondary" /> Verify Your Account
-            </h1>
-            <p className="text-gray-400">Unlock your financial insights with Verity Finance.</p>
-          </motion.div>
+          <img className="mx-auto h-12 w-auto" src="/logos/logo-verity.svg" alt="Verity Finance" />
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Create your account</h2>
+          <p className="mt-2 text-sm text-gray-600">Join thousands of financially smart users today</p>
+        </motion.div>
 
-          <form onSubmit={onSubmit} className="space-y-6">
-            
-            {/* --- The animated wrappers are back, with validation styles integrated --- */}
-            
-            <motion.div 
-              className="relative"
-              initial={{ x: -10, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-            >
-              <input type="text" name="name" value={name} onChange={onChange} placeholder="Full Name"
-                className={`w-full p-4 bg-gray-700 text-white border-b-2 rounded-t-md outline-none transition-all duration-300 ${errors.name ? 'border-red-500' : 'border-gray-600 focus:border-brand-primary'}`}
-              />
-              {errors.name && <p className="text-red-500 text-xs mt-1 ml-1">{errors.name}</p>}
-            </motion.div>
-
-            <motion.div 
-              className="relative"
-              initial={{ x: -10, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-            >
-              <input type="email" name="email" value={email} onChange={onChange} placeholder="Email Address"
-                className={`w-full p-4 bg-gray-700 text-white border-b-2 rounded-t-md outline-none transition-all duration-300 ${errors.email ? 'border-red-500' : 'border-gray-600 focus:border-brand-primary'}`}
-              />
-              {errors.email && <p className="text-red-500 text-xs mt-1 ml-1">{errors.email}</p>}
-            </motion.div>
-            
-            <motion.div 
-              className="relative"
-              initial={{ x: -10, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
-              <input type="text" name="panId" value={panId} onChange={onChange} placeholder="PAN ID" maxLength="10"
-                className={`w-full p-4 bg-gray-700 text-white border-b-2 rounded-t-md outline-none transition-all duration-300 uppercase ${errors.panId ? 'border-red-500' : 'border-gray-600 focus:border-brand-primary'}`}
-              />
-              {errors.panId ? (
-                <p className="text-red-500 text-xs mt-1 ml-1">{errors.panId}</p>
-              ) : (
-                <p className="text-xs text-gray-500 mt-1 ml-1">Your PAN is required to securely fetch your credit report.</p>
-              )}
-            </motion.div>
-
-            <motion.div /* ...password input with animation and validation... */ >
-               <div className="relative">
-                 <input
-                  type={showPassword ? "text" : "password"} name="password" value={password} onChange={onChange} placeholder="Password"
-                  className={`w-full p-4 pr-12 bg-gray-700 text-white border-b-2 rounded-t-md outline-none transition-all duration-300 ${errors.password ? 'border-red-500' : 'border-gray-600 focus:border-brand-primary'}`}
-                  />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white">
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
-                </button>
-               </div>
-              {errors.password && <p className="text-red-500 text-xs mt-1 ml-1">{errors.password}</p>}
-            </motion.div>
-
-            <motion.div /* ...confirm password input with animation and validation... */ >
-               <div className="relative">
-                 <input
-                  type={showPassword ? "text" : "password"} name="confirmPassword" value={confirmPassword} onChange={onChange} placeholder="Confirm Password"
-                  className={`w-full p-4 pr-12 bg-gray-700 text-white border-b-2 rounded-t-md outline-none transition-all duration-300 ${errors.confirmPassword ? 'border-red-500' : 'border-gray-600 focus:border-brand-primary'}`}
-                 />
-               </div>
-              {errors.confirmPassword && <p className="text-red-500 text-xs mt-1 ml-1">{errors.confirmPassword}</p>}
-            </motion.div>
-            
-            <motion.div /* ...terms checkbox animation... */ >
-                <div className="flex items-center">
-                    <input type="checkbox" name="agreeTerms" id="agreeTerms" checked={agreeTerms} onChange={onChange} className="h-5 w-5 text-brand-primary bg-gray-700 border-gray-600 rounded focus:ring-brand-primary" />
-                    <label htmlFor="agreeTerms" className="ml-3 text-sm text-gray-300">
-                        I agree to the <a href="/terms" className="text-brand-secondary hover:underline">Terms of Service</a> and <a href="/privacy" className="text-brand-secondary hover:underline">Privacy Policy</a>.
-                    </label>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1 }}
+          className="mt-8 sm:mx-auto sm:w-full sm:max-w-md"
+        >
+          <div className="bg-white py-8 px-4 shadow-xl sm:rounded-xl sm:px-10 border border-gray-100">
+            <form className="space-y-6" onSubmit={onSubmit}>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                <div className="mt-1">
+                  <input name="name" type="text" required value={name} onChange={onChange} className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary" placeholder="John Doe" />
                 </div>
-            </motion.div>
+              </div>
 
-            {/* --- The button with the icon is restored --- */}
-            <motion.button
-              type="submit"
-              className="w-full bg-brand-primary text-white p-4 rounded-lg font-semibold text-lg hover:bg-brand-secondary transition-colors duration-300 shadow-lg disabled:bg-gray-600 disabled:cursor-not-allowed flex items-center justify-center"
-              disabled={isLoading}
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 1, duration: 0.5 }}
-            >
-              {isLoading ? <Spinner /> : <>Sign Up & Check Score <FaArrowRight className="ml-2" /></>}
-            </motion.button>
-          </form>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Email address</label>
+                <div className="mt-1">
+                  <input name="email" type="email" required value={email} onChange={onChange} className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary" placeholder="you@example.com" />
+                </div>
+              </div>
 
-          <p className="text-center text-gray-400 text-sm mt-8">
-            Already have an account? <Link to="/login" className="text-brand-secondary hover:underline">Log In</Link>
-          </p>
+              <div>
+                 <label className="block text-sm font-medium text-gray-700">Password</label>
+                 <div className="mt-1 relative">
+                    <input name="password" type={showPassword ? "text" : "password"} required value={password} onChange={onChange} className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary" placeholder="••••••••" />
+                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                 </div>
+              </div>
+
+              <div>
+                 <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+                 <div className="mt-1">
+                    <input name="confirmPassword" type="password" required value={confirmPassword} onChange={onChange} className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary" placeholder="••••••••" />
+                 </div>
+              </div>
+
+              <div className="flex items-center">
+                <input id="agreeTerms" name="agreeTerms" type="checkbox" checked={agreeTerms} onChange={onChange} className="h-4 w-4 text-brand-primary focus:ring-brand-primary border-gray-300 rounded" />
+                <label htmlFor="agreeTerms" className="ml-2 block text-sm text-gray-900">
+                  I agree to the <Link to="/terms" className="text-brand-primary hover:underline">Terms</Link> and <Link to="/privacy" className="text-brand-primary hover:underline">Privacy Policy</Link>
+                </label>
+              </div>
+
+              <div>
+                <button type="submit" disabled={isLoading} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-brand-primary hover:bg-brand-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary transition-colors disabled:bg-gray-400">
+                  {isLoading ? <Spinner /> : <><FaUserPlus className="mr-2 mt-0.5" /> Sign Up</>}
+                </button>
+              </div>
+            </form>
+
+            <div className="mt-6">
+               <div className="relative">
+                  <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-300"></div></div>
+                  <div className="relative flex justify-center text-sm"><span className="px-2 bg-white text-gray-500">Or continue with</span></div>
+               </div>
+               <div className="mt-6 text-center">
+                  <p className="text-sm text-gray-600">
+                    Already have an account? <Link to="/login" className="font-medium text-brand-primary hover:text-brand-secondary">Sign in</Link>
+                  </p>
+               </div>
+            </div>
+          </div>
         </motion.div>
       </div>
-    </>
   );
 }

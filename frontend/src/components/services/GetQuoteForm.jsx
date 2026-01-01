@@ -8,29 +8,29 @@ import toast from 'react-hot-toast';
 export default function GetQuoteForm({ defaultService = "General Inquiry", hideService = false }) {
     const dispatch = useDispatch();
     const { isLoading } = useSelector((state) => state.contact);
-    
+
     // Initialize state with the passed prop
-    const [formData, setFormData] = useState({ name: '', phone: '', type: defaultService });
+    const [formData, setFormData] = useState({ name: '', phone: '', email: '', type: defaultService });
 
     const handleChange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const submissionData = {
-            name: formData.name,
-            phone: formData.phone,
-            email: 'N/A', // Or add email field if needed
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
             serviceOfInterest: formData.type,
             message: 'Quick Quote Request from Service Page',
         };
 
         const result = await dispatch(submitContactForm(submissionData));
-        
+
         if (!result.error) {
             toast.success(`Request sent for ${formData.type}! We will call you shortly.`);
-            setFormData({ name: '', phone: '', type: defaultService });
+            setFormData({ name: '', phone: '', email: '', type: defaultService });
         } else {
             toast.error("Something went wrong. Please try again.");
         }
@@ -44,11 +44,17 @@ export default function GetQuoteForm({ defaultService = "General Inquiry", hideS
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
                     <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} required className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary outline-none" placeholder="Enter your name" />
                 </div>
-                 <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
-                    <input type="tel" name="phone" id="phone" value={formData.phone} onChange={handleChange} required className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary outline-none" placeholder="Enter mobile number" />
+                <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" name="email" id="email" value={formData.email} onChange={handleChange} required className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary outline-none" placeholder="Enter your Email" />
                 </div>
-                
+                <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <input type="tel" name="phone" id="phone" value={formData.phone} onChange={handleChange} pattern="[0-9]{10}" required
+                        placeholder="Enter 10-digit mobile number" className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary outline-none" />
+                </div>
+
+
                 {/* Conditionally render the dropdown */}
                 {!hideService ? (
                     <div>
