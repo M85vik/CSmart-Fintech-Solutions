@@ -1,7 +1,7 @@
 const axios = require('axios');
-// const dotenv = require('dotenv');
-// const path = require("path");
-// dotenv.config({ path: path.resolve(__dirname, "../.env") });
+const dotenv = require('dotenv');
+const path = require("path");
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const UNOSEND_API_URL = "https://www.unosend.co/api/v1/emails";
 
 const UNOSEND_API_KEY=process.env.UNOSEND_API_KEY
