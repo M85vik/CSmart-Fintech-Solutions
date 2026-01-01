@@ -1,6 +1,6 @@
 // File: src/features/banners/bannerService.js
 import axios from 'axios';
-const API_URL = import.meta.env.VITE_API_URL + '/api/banners/';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5001') + '/api/banners/';
 
 // --- PUBLIC FUNCTION (Already exists) ---
 const getActiveBanners = async () => {
