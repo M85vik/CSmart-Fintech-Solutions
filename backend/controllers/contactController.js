@@ -31,7 +31,7 @@ exports.createContact = async (req, res) => {
 
     // 2️⃣ Email to internal team
     await sendEmail({
-      to: "sales@yourcompany.com",
+      to: "858sharma@gmail.com",
       subject: `New Callback Request – ${serviceOfInterest}`,
       html: buildInternalLeadHTML({
         name,
