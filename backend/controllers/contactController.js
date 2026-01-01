@@ -1,6 +1,7 @@
 // File: controllers/contactController.js
 const Contact = require('../models/Contact');
 const sendEmail = require('../services/emailService.js');
+const { enqueueEmail } = require("../utils/emailQueue");
 
 const {
   buildCustomerConfirmationHTML,
@@ -10,47 +11,6 @@ const {
 // @desc    Create a new contact submission
 // @route   POST /api/contacts
 // @access  Public
-// exports.createContact = async (req, res) => {
-//   const { name, email, phone, serviceOfInterest, message } = req.body;
-//   if (!name || !email || !serviceOfInterest || !message) {
-//     return res.status(400).json({ message: 'Please fill out all required fields.' });
-//   }
-//   try {
-//     const contact = new Contact({ name, email, phone, serviceOfInterest, message });
-//     await contact.save();
-
-//    await sendEmail({
-//       to: email,
-//       subject: "We’ve Received Your Enquiry",
-//       html: buildCustomerConfirmationHTML({
-//         name,
-//         service: serviceOfInterest,
-//       }),
-    
-//     });
-
-//   //   // 2️⃣ Email to internal team
-//   //   await sendEmail({
-//   //     to: "858sharma@gmail.com",
-//   //     subject: `New Callback Request – ${serviceOfInterest}`,
-//   //     html: buildInternalLeadHTML({
-//   //       name,
-//   //       email,
-//   //       phone,
-//   //       service: serviceOfInterest,
-//   //       message,
-//   //     }),
-   
-//   //   });
-//     res.status(201).json({ message: 'Your message has been received! We will get back to you shortly.' });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Server Error' });
-//   }
-// };
-
-
-
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 exports.createContact = async (req, res) => {
   const { name, email, phone, serviceOfInterest, message } = req.body;
@@ -73,34 +33,23 @@ exports.createContact = async (req, res) => {
       message: 'Your message has been received! We will get back to you shortly.',
     });
 
-    // 📩 Customer email (background)
-    sendEmail({
-      to: email,
-      subject: "We’ve Received Your Enquiry",
-      html: buildCustomerConfirmationHTML({
-        name,
-        service: serviceOfInterest,
-      }),
-    }).catch(err =>
-      console.error("Customer email failed (background):", err.message)
-    );
+    
+enqueueEmail(() =>
+  sendEmail({
+    to: email,
+    subject: "We’ve Received Your Enquiry",
+    html: buildCustomerConfirmationHTML({ name, service: serviceOfInterest }),
+  })
+);
 
-    // ⏱ Delay to respect rate limit
-    delay(600).then(() =>
-      sendEmail({
-        to: "support@vikasharma.online",
-        subject: `New Enquiry – ${serviceOfInterest}`,
-        html: buildInternalLeadHTML({
-          name,
-          email,
-          phone,
-          service: serviceOfInterest,
-          message,
-        }),
-      }).catch(err =>
-        console.error("Support email failed (background):", err.message)
-      )
-    );
+enqueueEmail(() =>
+  sendEmail({
+    to: "support@vikasharma.online",
+    subject: `New Enquiry – ${serviceOfInterest}`,
+    html: buildInternalLeadHTML({ name, email, phone, service: serviceOfInterest, message }),
+  })
+);
+
 
   } catch (error) {
     console.error("Create contact error:", error);
