@@ -9,14 +9,18 @@ const {
     deleteUserService 
 } = require('../controllers/userServiceController');
 const { protect } = require('../middleware/authMiddleware');
+const upload = require('../config/cloudinary'); // Use your existing Cloudinary config
 
-// --- USER ROUTE ---
+// Public / User Routes
 router.get('/my', protect, getMyServices);
 
-// --- ADMIN ROUTES ---
-router.get('/all', protect, getAllServices);          // View Master List
-router.post('/', protect, createUserService);         // Assign new service
-router.put('/status/:id', protect, toggleServiceStatus); // Freeze/Unfreeze
-router.delete('/:id', protect, deleteUserService);    // Remove service
+// Admin Routes
+router.get('/all', protect, getAllServices);
+
+// UPDATE: Add 'upload.single' to handle the file
+router.post('/', protect, upload.single('document'), createUserService);
+
+router.put('/status/:id', protect, toggleServiceStatus);
+router.delete('/:id', protect, deleteUserService);
 
 module.exports = router;

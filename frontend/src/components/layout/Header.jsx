@@ -66,7 +66,7 @@ export default function Header() {
           
           {/* 1. LOGO */}
           <Link to="/" className="flex-shrink-0 flex items-center gap-3">
-             <img className="h-10 w-auto" src="/logos/logo-verity.svg" alt="Verity Finance" />
+             <img className="h-10 w-auto" src="/logos/logo-verity.png" alt="Verity Finance" />
           </Link>
 
           {/* 2. DESKTOP NAV */}

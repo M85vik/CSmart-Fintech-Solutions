@@ -6,8 +6,6 @@ const calculateNextDueDate = (paymentDay) => {
     const today = new Date();
     let nextDate = new Date();
     nextDate.setDate(paymentDay);
-    
-    // If today is past the payment day, next due is next month
     if (today.getDate() > paymentDay) {
         nextDate.setMonth(nextDate.getMonth() + 1);
     }
@@ -15,43 +13,29 @@ const calculateNextDueDate = (paymentDay) => {
 };
 
 // @desc    Get services (With Auto-Update Logic)
-// @route   GET /api/user-services/my
-// @access  Private
 exports.getMyServices = async (req, res) => {
   try {
-    let services = await UserService.find({ user: req.user.id });
+    let services = await UserService.find({ user: req.user.id }).sort({ createdAt: -1 });
     const today = new Date();
 
-    // --- AUTOMATION LOGIC START ---
     const updatedServices = await Promise.all(services.map(async (service) => {
-        // Only auto-update if Active
         if (service.status === 'Active') {
             const dueDate = new Date(service.nextDueDate);
-            
-            // If we have passed the due date
             if (today > dueDate) {
-                // 1. Assume payment made (Simulated automation)
                 service.amountPaid += service.emiAmount;
                 service.installmentsPaid += 1;
-                
-                // 2. Set next due date to next month
                 let nextMonth = new Date(dueDate);
                 nextMonth.setMonth(nextMonth.getMonth() + 1);
                 service.nextDueDate = nextMonth;
-
-                // 3. Close loan if fully paid
                 if (service.amountPaid >= service.totalLoanAmount) {
                     service.status = 'Closed';
-                    service.amountPaid = service.totalLoanAmount; // Cap it
+                    service.amountPaid = service.totalLoanAmount;
                 }
-
                 await service.save();
             }
         }
         return service;
     }));
-    // --- AUTOMATION LOGIC END ---
-
     res.json(updatedServices);
   } catch (error) {
     console.error(error);
@@ -59,17 +43,20 @@ exports.getMyServices = async (req, res) => {
   }
 };
 
-// @desc    Admin: Create Service
-// @route   POST /api/user-services
-// @access  Private/Admin
+// @desc    Admin: Create Service with Document
 exports.createUserService = async (req, res) => {
-  const { email, serviceType, provider, accountNumber, totalLoanAmount, emiAmount, paymentDay } = req.body;
-
   try {
+    const { email, serviceType, provider, accountNumber, totalLoanAmount, emiAmount, paymentDay } = req.body;
+    
+    // 1. Check for file upload (Cloudinary middleware puts it in req.file)
+    let documentUrl = '';
+    if (req.file) {
+      documentUrl = req.file.path;
+    }
+
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    // Initial Due Date Calculation
     let firstDueDate = new Date();
     firstDueDate.setDate(paymentDay);
     if (new Date().getDate() > paymentDay) {
@@ -85,7 +72,8 @@ exports.createUserService = async (req, res) => {
       emiAmount,
       paymentDay,
       nextDueDate: firstDueDate,
-      status: 'Active'
+      status: 'Active',
+      documentUrl // Save the URL
     });
 
     const createdService = await service.save();
@@ -95,9 +83,7 @@ exports.createUserService = async (req, res) => {
   }
 };
 
-// @desc    Admin: Get ALL Services (Master Record)
-// @route   GET /api/user-services/all
-// @access  Private/Admin
+// @desc    Admin: Get ALL Services
 exports.getAllServices = async (req, res) => {
     try {
         const services = await UserService.find({}).populate('user', 'name email').sort({ createdAt: -1 });
@@ -108,8 +94,6 @@ exports.getAllServices = async (req, res) => {
 };
 
 // @desc    Admin: Toggle Freeze Status
-// @route   PUT /api/user-services/status/:id
-// @access  Private/Admin
 exports.toggleServiceStatus = async (req, res) => {
     try {
         const service = await UserService.findById(req.params.id);
@@ -126,8 +110,6 @@ exports.toggleServiceStatus = async (req, res) => {
 };
 
 // @desc    Admin: Delete Service
-// @route   DELETE /api/user-services/:id
-// @access  Private/Admin
 exports.deleteUserService = async (req, res) => {
     try {
         const service = await UserService.findById(req.params.id);
