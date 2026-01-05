@@ -134,17 +134,13 @@ export default function Dashboard() {
              <div className="py-10"><Spinner /></div>
           ) : (
             services && services.length > 0 && (
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mb-10"
-                >
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
                     <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
                         <FaWallet className="mr-2 text-brand-primary" /> Your Active Services
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {services.map((service) => (
-                            <div key={service._id} className={`bg-white rounded-xl shadow-sm border-l-4 overflow-hidden ${service.status === 'Frozen' ? 'border-red-500' : 'border-brand-primary'}`}>
+                            <div key={service._id} className={`bg-white rounded-xl shadow-sm border-l-4 overflow-hidden flex flex-col justify-between ${service.status === 'Frozen' ? 'border-red-500' : 'border-brand-primary'}`}>
                                 <div className="p-5">
                                     <div className="flex justify-between items-start mb-2">
                                         <div>
@@ -156,20 +152,18 @@ export default function Dashboard() {
                                         </span>
                                     </div>
 
-                                    {/* --- NEW: ACCOUNT NUMBER DISPLAY --- */}
                                     <div className="mb-4 inline-flex items-center px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-600">
                                         <FaHashtag className="mr-1 text-gray-400" />
                                         Ref / Acct: <span className="ml-1 font-bold text-gray-800 font-mono">{service.accountNumber}</span>
                                     </div>
 
-                                    {/* LOGIC: IF FROZEN, SHOW WARNING. IF ACTIVE, SHOW PROGRESS */}
                                     {service.status === 'Frozen' ? (
                                         <div className="bg-red-50 p-4 rounded-lg mt-2 border border-red-100">
                                             <div className="flex items-start">
                                                 <FaLock className="text-red-500 mt-1 mr-2" />
                                                 <div>
                                                     <p className="text-sm font-bold text-red-700">Account Frozen</p>
-                                                    <p className="text-xs text-red-600 mt-1">Updates paused due to missed payments. Please contact support.</p>
+                                                    <p className="text-xs text-red-600 mt-1">Updates paused. Contact support.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -179,14 +173,9 @@ export default function Dashboard() {
                                                 <span className="text-gray-500">Total Value</span>
                                                 <span className="font-bold">₹{service.totalLoanAmount ? service.totalLoanAmount.toLocaleString() : service.totalAmount.toLocaleString()}</span>
                                             </div>
-                                            
                                             <div className="w-full bg-gray-200 rounded-full h-2">
-                                                <div 
-                                                    className="bg-brand-primary h-2 rounded-full transition-all duration-1000" 
-                                                    style={{ width: `${(service.amountPaid / (service.totalLoanAmount || service.totalAmount)) * 100}%` }}
-                                                ></div>
+                                                <div className="bg-brand-primary h-2 rounded-full transition-all duration-1000" style={{ width: `${(service.amountPaid / (service.totalLoanAmount || service.totalAmount)) * 100}%` }}></div>
                                             </div>
-                                            
                                             <div className="flex items-center justify-between bg-orange-50 p-3 rounded-lg mt-2">
                                                 <div className="flex items-center text-orange-700">
                                                     <FaCalendarAlt className="mr-2" />
@@ -200,6 +189,20 @@ export default function Dashboard() {
                                         </div>
                                     )}
                                 </div>
+
+                                {/* --- DOWNLOAD BUTTON FOOTER --- */}
+                                {service.documentUrl && (
+                                    <div className="bg-gray-50 px-5 py-3 border-t border-gray-100">
+                                        <a 
+                                            href={service.documentUrl} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="flex items-center justify-center w-full text-sm font-bold text-brand-primary hover:text-brand-secondary transition-colors"
+                                        >
+                                            <FaFileDownload className="mr-2" /> Download Document
+                                        </a>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>

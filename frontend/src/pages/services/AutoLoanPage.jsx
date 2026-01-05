@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { submitContactForm } from '../../features/contacts/contactSlice';
+import toast from 'react-hot-toast';
 import {
   Box, Container, Typography, Grid, Button,
   Card, CardContent, Dialog, DialogTitle, DialogContent,
@@ -251,8 +254,46 @@ const CallbackModal = ({ open, onClose }) => (
 
 // --- MAIN PAGE ---
 const AutoLoanPage = () => {
-  const [openCallback, setOpenCallback] = useState(false);
   const navigate = useNavigate();
+  
+  // 2. Redux Setup
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.contact);
+
+  // 3. Modal & Form State
+  const [openCallback, setOpenCallback] = useState(false);
+  const [formData, setFormData] = useState({ name: '', phone: '', city: '' });
+
+  // 4. Handle Input Change
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // 5. Handle Submit (The "Map" Logic)
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.phone) {
+      toast.error("Name and Phone are required!");
+      return;
+    }
+
+    const submissionData = {
+      name: formData.name,
+      phone: formData.phone,
+      email: 'N/A', // Auto-loans often just ask for phone, but backend expects string
+      serviceOfInterest: 'New Car Loan Lead', 
+      message: `Callback Request from Auto Loan Page.\nCity: ${formData.city || 'Not specified'}`,
+    };
+
+    const result = await dispatch(submitContactForm(submissionData));
+
+    if (!result.error) {
+      toast.success("Request Sent! We'll call you in 5 mins.");
+      setOpenCallback(false);
+      setFormData({ name: '', phone: '', city: '' });
+    } else {
+      toast.error("Failed to send request. Try again.");
+    }
+  };
 
   return (
     <Box sx={{ bgcolor: '#f9f9f9', minHeight: '100vh' }}>
@@ -297,7 +338,59 @@ const AutoLoanPage = () => {
         Quick Call
       </Fab>
 
-      <CallbackModal open={openCallback} onClose={() => setOpenCallback(false)} />
+      {/* --- THE WIRED MODAL --- */}
+      <Dialog open={openCallback} onClose={() => setOpenCallback(false)} maxWidth="sm" fullWidth>
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          Get Best Car Loan Rates
+          <IconButton onClick={() => setOpenCallback(false)}><CloseIcon /></IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Box component="form" sx={{ mt: 1 }}>
+            <TextField 
+              fullWidth 
+              label="Your Name" 
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              margin="normal" 
+              variant="outlined" 
+            />
+            <TextField 
+              fullWidth 
+              label="Mobile Number" 
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              margin="normal" 
+              variant="outlined" 
+              type="tel"
+            />
+            <TextField 
+              fullWidth 
+              label="City" 
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              margin="normal" 
+              variant="outlined" 
+            />
+            
+            <Button 
+              fullWidth 
+              variant="contained" 
+              size="large"
+              disabled={isLoading}
+              onClick={handleSubmit} 
+              sx={{ mt: 3, bgcolor: ORANGE_MAIN, fontWeight: 'bold', py: 1.5, '&:hover': { bgcolor: ORANGE_LIGHT } }}
+            >
+              {isLoading ? 'Sending...' : 'Request Call Back'}
+            </Button>
+            <Typography variant="caption" color="text.secondary" align="center" display="block" sx={{ mt: 2 }}>
+              By clicking, you agree to our Terms & Privacy Policy.
+            </Typography>
+          </Box>
+        </DialogContent>
+      </Dialog>
 
     </Box>
   );

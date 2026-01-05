@@ -1,17 +1,10 @@
-// File: controllers/contactController.js
 const Contact = require('../models/Contact');
-const sendEmail = require('../services/emailService.js');
-const { enqueueEmail } = require("../utils/emailQueue");
+const { enqueueEmail } = require('../utils/emailQueue');
+const { buildInternalLeadHTML, buildCustomerConfirmationHTML } = require('../utils/emailTemplates');
 
-const {
-  buildCustomerConfirmationHTML,
-  buildInternalLeadHTML
-} = require("../utils/emailTemplates");
-
-// @desc    Create a new contact submission
+// @desc    Create a new contact submission & Send Emails
 // @route   POST /api/contacts
 // @access  Public
-
 exports.createContact = async (req, res) => {
   const { name, email, phone, serviceOfInterest, message } = req.body;
 
@@ -20,44 +13,42 @@ exports.createContact = async (req, res) => {
   }
 
   try {
-    await Contact.create({
-      name,
-      email,
-      phone,
-      serviceOfInterest,
-      message,
+    // 1. Save to Database (The original logic)
+    const contact = new Contact({ name, email, phone, serviceOfInterest, message });
+    await contact.save();
+
+    // 2. Prepare Email Data
+    const adminEmail = process.env.ADMIN_EMAIL || 'your-admin-email@example.com'; // Set this in .env!
+
+    // 3. Queue Email to ADMIN (New Lead Alert)
+    enqueueEmail(async () => {
+      const { sendEmail } = require('../utils/emailService');
+      await sendEmail({
+        to: [adminEmail],
+        subject: `🚀 New Lead: ${serviceOfInterest} - ${name}`,
+        html: buildInternalLeadHTML({ name, email, phone, service: serviceOfInterest, message }),
+      });
     });
 
-    // 🚀 Respond immediately
-    res.status(201).json({
-      message: 'Your message has been received! We will get back to you shortly.',
-    });
+    // 4. Queue Email to CUSTOMER (Confirmation)
+    // Only send if email is valid
+    if (email && email.includes('@')) {
+      enqueueEmail(async () => {
+        const { sendEmail } = require('../utils/emailService');
+        await sendEmail({
+          to: [email],
+          subject: `We received your request for ${serviceOfInterest} - Verity Finance`,
+          html: buildCustomerConfirmationHTML({ name, service: serviceOfInterest }),
+        });
+      });
+    }
 
-    
-enqueueEmail(() =>
-  sendEmail({
-    to: email,
-    subject: "We’ve Received Your Enquiry",
-    html: buildCustomerConfirmationHTML({ name, service: serviceOfInterest }),
-  })
-);
-
-enqueueEmail(() =>
-  sendEmail({
-    to: "support@vikasharma.online",
-    subject: `New Enquiry – ${serviceOfInterest}`,
-    html: buildInternalLeadHTML({ name, email, phone, service: serviceOfInterest, message }),
-  })
-);
-
-
+    res.status(201).json({ message: 'Request received! Check your email for confirmation.' });
   } catch (error) {
-    console.error("Create contact error:", error);
-    return res.status(500).json({ message: 'Server Error' });
+    console.error("Contact Controller Error:", error);
+    res.status(500).json({ message: 'Server Error' });
   }
 };
-
-
 
 // @desc    Get all contact submissions
 // @route   GET /api/contacts
@@ -79,11 +70,11 @@ exports.deleteContact = async (req, res) => {
         const contact = await Contact.findById(req.params.id);
         if(contact) {
             await contact.deleteOne();
-            res.json({ message: 'Contact submission removed' });
+            res.json({ message: 'Message deleted' });
         } else {
-            res.status(404).json({ message: 'Contact submission not found' });
+            res.status(404).json({ message: 'Message not found'});
         }
     } catch (error) {
-        res.status(500).json({ message: 'Server Error' });
+        res.status(500).json({ message: error.message });
     }
 };

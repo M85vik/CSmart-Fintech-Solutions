@@ -1,5 +1,9 @@
 // File: src/pages/services/LoanAgainstCarPage.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { submitContactForm } from '../../features/contacts/contactSlice';
+import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 import { 
   Box, Container, Typography, Grid, Button, 
@@ -277,8 +281,43 @@ const CallbackModal = ({ open, onClose }) => (
 );
 
 // --- MAIN PAGE ---
-export default function LoanAgainstCarPage() {
+const LoanAgainstCarPage = () => {
+  const navigate = useNavigate(); // This works now!
+  
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.contact);
+
   const [openCallback, setOpenCallback] = useState(false);
+  const [formData, setFormData] = useState({ name: '', phone: '', city: '' });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.phone) {
+      toast.error("Name and Phone are required!");
+      return;
+    }
+
+    const submissionData = {
+      name: formData.name,
+      phone: formData.phone,
+      email: 'N/A', 
+      serviceOfInterest: 'Loan Against Car Lead',
+      message: `Callback Request from Loan Against Car Page.\nCity: ${formData.city || 'Not specified'}`,
+    };
+
+    const result = await dispatch(submitContactForm(submissionData));
+
+    if (!result.error) {
+      toast.success("Request Sent! We'll call you shortly.");
+      setOpenCallback(false);
+      setFormData({ name: '', phone: '', city: '' });
+    } else {
+      toast.error("Failed to send request. Try again.");
+    }
+  };
 
   return (
     <>
@@ -313,26 +352,59 @@ export default function LoanAgainstCarPage() {
         <GoForItBanner onApply={() => setOpenCallback(true)} />
 
         {/* 7. Floating Action Button */}
-        <Fab 
-            variant="extended"
-            onClick={() => setOpenCallback(true)}
-            sx={{ 
-            position: 'fixed', 
-            bottom: 30, 
-            right: 30, 
-            bgcolor: ORANGE_MAIN, 
-            color: '#fff', 
-            fontWeight: 'bold',
-            '&:hover': { bgcolor: ORANGE_LIGHT }
-            }}
-        >
-            <PhoneInTalkIcon sx={{ mr: 1 }} />
-            Quick Call
-        </Fab>
+        <Dialog open={openCallback} onClose={() => setOpenCallback(false)} maxWidth="sm" fullWidth>
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          Loan Against Car - Quick Apply
+          <IconButton onClick={() => setOpenCallback(false)}><CloseIcon /></IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Box component="form" sx={{ mt: 1 }}>
+            <TextField 
+              fullWidth label="Your Name" name="name"
+              value={formData.name} onChange={handleChange}
+              margin="normal" variant="outlined" 
+            />
+            <TextField 
+              fullWidth label="Mobile Number" name="phone"
+              value={formData.phone} onChange={handleChange}
+              margin="normal" variant="outlined" type="tel"
+            />
+            <TextField 
+              fullWidth label="City" name="city"
+              value={formData.city} onChange={handleChange}
+              margin="normal" variant="outlined" 
+            />
+            
+            <Button 
+              fullWidth variant="contained" size="large"
+              disabled={isLoading}
+              onClick={handleSubmit} // <--- CONNECTED
+              sx={{ mt: 3, bgcolor: ORANGE_MAIN, fontWeight: 'bold', py: 1.5, '&:hover': { bgcolor: ORANGE_LIGHT } }}
+            >
+              {isLoading ? 'Sending...' : 'Check Eligibility'}
+            </Button>
+            <Typography variant="caption" color="text.secondary" align="center" display="block" sx={{ mt: 2 }}>
+              By clicking, you agree to our Terms & Privacy Policy.
+            </Typography>
+          </Box>
+        </DialogContent>
+      </Dialog>
 
-        <CallbackModal open={openCallback} onClose={() => setOpenCallback(false)} />
+      <Fab 
+        variant="extended"
+        onClick={() => setOpenCallback(true)}
+        sx={{ 
+          position: 'fixed', bottom: 30, right: 30, 
+          bgcolor: ORANGE_MAIN, color: '#fff', fontWeight: 'bold',
+          '&:hover': { bgcolor: ORANGE_LIGHT }, zIndex: 100
+        }}
+      >
+        <PhoneInTalkIcon sx={{ mr: 1 }} />
+        Get Funds
+      </Fab>
       
       </Box>
     </>
   );
 }
+export default LoanAgainstCarPage;

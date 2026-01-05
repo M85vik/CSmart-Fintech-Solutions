@@ -1,6 +1,10 @@
 // File: src/pages/services/HomeLoanPage.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { submitContactForm } from '../../features/contacts/contactSlice';
+import toast from 'react-hot-toast';
 import { FaHome, FaPercent, FaClock, FaFileInvoiceDollar, FaGift, FaCheckCircle, FaFileAlt, FaUserTie } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
