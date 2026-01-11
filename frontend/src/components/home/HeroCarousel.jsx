@@ -4,7 +4,8 @@ import { getActiveBanners } from '../../features/banners/bannerSlice';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import BannerSkeleton from '../shared/BannerSkeleton';
+
+// We removed the BannerSkeleton import since we are using the Static Banner instead.
 
 export default function HeroCarousel() {
   const dispatch = useDispatch();
@@ -15,12 +16,12 @@ export default function HeroCarousel() {
   
   const [current, setCurrent] = useState(0);
 
-  // 1. Fetch Banners Effect
+  // 1. Fetch Banners
   useEffect(() => {
     dispatch(getActiveBanners());
   }, [dispatch]);
 
-  // 2. Auto-Play Effect (MOVED UP HERE, BEFORE RETURNS)
+  // 2. Auto-Play Timer
   useEffect(() => {
     if (banners && banners.length > 1) {
       const timer = setTimeout(() => {
@@ -30,33 +31,55 @@ export default function HeroCarousel() {
     }
   }, [current, banners]);
 
-  // --- NOW WE CAN RETURN EARLY ---
+  // --- THE LOGIC CHANGE IS HERE ---
+  // If we are Loading OR Error OR No Banners found...
+  // Show the "Default Static Banner" immediately.
+  const showStatic = isLoading || isError || !banners || banners.length === 0;
 
-  // Loading State
-  if (isLoading) {
-    return <BannerSkeleton />;
-  }
-
-  // Error/Empty State
-  if (isError || !banners || banners.length === 0) {
+  if (showStatic) {
      return (
-        <div className="relative bg-gray-900 text-white min-h-[60vh] md:h-[70vh] flex items-center justify-center">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-40"></div>
-            <div className="text-center px-4 relative z-10">
-                <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-lg">
+        <div className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden bg-gray-900 text-white group">
+            
+            <div 
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-[10000ms] ease-linear scale-105"
+                style={{ backgroundImage: "url('/car-dashboard-hero.jpg')" }}
+            />
+            
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+
+            <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center items-start">
+                <motion.h1 
+                    initial={{ y: 20, opacity: 0 }} 
+                    animate={{ y: 0, opacity: 1 }} 
+                    transition={{ duration: 0.8 }}
+                    className="text-4xl md:text-7xl font-extrabold max-w-4xl leading-tight drop-shadow-lg"
+                >
                   Fast, Flexible, and Fair Financial Solutions
-                </h1>
-                <p className="text-lg text-gray-200 mb-8 max-w-2xl mx-auto drop-shadow-md">
-                  Get the best loans and insurance deals tailored for you.
-                </p>
-                <Link to="/services/home-loan" className="bg-brand-primary text-white font-bold py-3 px-8 rounded-full hover:bg-orange-600 transition-colors shadow-lg">
-                    Get Started
-                </Link>
+                </motion.h1>
+                <motion.p 
+                    initial={{ y: 20, opacity: 0 }} 
+                    animate={{ y: 0, opacity: 1 }} 
+                    transition={{ delay: 0.2, duration: 0.8 }}
+                    className="mt-6 text-lg md:text-2xl text-gray-200 max-w-2xl font-light drop-shadow-md"
+                >
+                  We are fetching the latest exclusive offers for you...
+                </motion.p>
+                <motion.div 
+                    initial={{ y: 20, opacity: 0 }} 
+                    animate={{ y: 0, opacity: 1 }} 
+                    transition={{ delay: 0.4, duration: 0.8 }}
+                    className="mt-10"
+                >
+                    <Link to="/services/home-loan" className="bg-brand-primary text-white font-bold py-4 px-10 rounded-full hover:bg-orange-600 transition-all shadow-xl hover:shadow-orange-500/30 text-lg">
+                        Explore Services
+                    </Link>
+                </motion.div>
             </div>
         </div>
      );
   }
 
+  // --- DYNAMIC CAROUSEL (Runs once data is loaded) ---
   const nextSlide = () => setCurrent((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
   const prevSlide = () => setCurrent((prev) => (prev === 0 ? banners.length - 1 : prev - 1));
 
