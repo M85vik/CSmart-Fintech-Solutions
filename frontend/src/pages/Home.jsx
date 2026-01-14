@@ -15,8 +15,8 @@ export default function Home() {
 
   const homepageFaqs = [
     {
-      question: "What types of loans does Verity Finance offer?",
-      answer: "Verity Finance offers a wide range of financial products, including Home Loans, Car Loans, Personal Loans, and Business Loans to suit your various needs."
+      question: "What types of loans does CS Smart Finserv offer?",
+      answer: "CS Smart Finserv offers a wide range of financial products, including Home Loans, Car Loans, Personal Loans, and Business Loans to suit your various needs."
     },
     {
       question: "How do I apply for a loan?",
@@ -31,13 +31,13 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Verity Finance | Simple & Transparent Loans and Insurance</title>
-        <meta name="description" content="Verity Finance offers a wide choice of financial products like loans and insurance through a simple, paperless process. Check your free credit score instantly." />
+        <title>CS Smart Finserv | Simple & Transparent Loans and Insurance</title>
+        <meta name="description" content="CS Smart Finserv offers a wide choice of financial products like loans and insurance through a simple, paperless process. Check your free credit score instantly." />
       </Helmet>
       
       <HeroCarousel /> 
       
-      <CreditScoreCta /> 
+      {/* <CreditScoreCta />  */}
 
       <FeaturesSection />
       <ProductHighlights />

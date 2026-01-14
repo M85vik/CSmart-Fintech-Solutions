@@ -200,8 +200,8 @@ const WhyChooseUs = () => (
             </Typography>
             <Grid container spacing={4} justifyContent="center">
                 {[
-                    { icon: <GroupsIcon sx={{ fontSize: 50 }} />, title: '11 Million+', sub: 'Happy Customers' },
-                    { icon: <AccountBalanceIcon sx={{ fontSize: 50 }} />, title: '30+ Years', sub: 'Of Trust & Legacy' },
+                    { icon: <GroupsIcon sx={{ fontSize: 50 }} />, title: '10K+', sub: 'Happy Customers' },
+                    { icon: <AccountBalanceIcon sx={{ fontSize: 50 }} />, title: '10+ Years', sub: 'Of Trust & Legacy' },
                     { icon: <SpeedIcon sx={{ fontSize: 50 }} />, title: '24 Hours', sub: 'Express Disbursal' },
                     { icon: <VerifiedUserIcon sx={{ fontSize: 50 }} />, title: 'Transparent', sub: 'No Hidden Fees' },
                 ].map((item, i) => (

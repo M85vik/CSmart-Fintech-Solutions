@@ -61,10 +61,10 @@ function BlogDetails() {
     <>
       <Helmet>
         {/* Dynamic SEO tags for this specific blog post */}
-        <title>{`${blog?.title || 'Blog Post'} | Verity Finance Fintech`}</title>
+        <title>{`${blog?.title || 'Blog Post'} | CS Smart Finserv Fintech`}</title>
         <meta 
           name="description" 
-          content={blog?.content ? blog.content.substring(0, 155) : 'Read this insightful article from Verity Finance Fintech.'}
+          content={blog?.content ? blog.content.substring(0, 155) : 'Read this insightful article from CS Smart Finserv Fintech.'}
         />
       </Helmet>
 

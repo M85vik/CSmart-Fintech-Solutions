@@ -49,7 +49,7 @@
 //   return (
 //     <>
 //       <Helmet>
-//         <title>Admin Login | Verity Finance Fintech</title>
+//         <title>Admin Login | CS Smart Finserv Fintech</title>
 //       </Helmet>
 //       <div className="container mx-auto px-4 py-12 flex justify-center">
 //         <div className="w-full max-w-md">
@@ -156,7 +156,7 @@ export default function Login() {
   return (
     <>
       <Helmet>
-        <title>Admin Login | Verity Finance Fintech</title>
+        <title>Admin Login | CS Smart Finserv Fintech</title>
       </Helmet>
       {/* --- NEW UI/UX STRUCTURE --- */}
       <div className="min-h-screen flex items-center justify-center bg-brand-bg p-4">
@@ -164,7 +164,7 @@ export default function Login() {
           
           {/* Left Side: Branding and Illustration */}
           <div className="hidden md:flex flex-col items-center justify-center bg-brand-primary p-12 text-white">
-            <h1 className="text-4xl font-bold mb-4">Verity Finance Admin</h1>
+            <h1 className="text-4xl font-bold mb-4">CS Smart Finserv Admin</h1>
             <p className="text-center text-white/80">
               Welcome back! Manage your website content and connect with your users.
             </p>

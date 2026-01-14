@@ -50,7 +50,7 @@ export default function CarDetails() {
   return (
     <>
       <Helmet>
-        <title>{`${car.make} ${car.model} Loan Offers | Verity Finance`}</title>
+        <title>{`${car.make} ${car.model} Loan Offers | CS Smart Finserv`}</title>
       </Helmet>
 
       <div className="bg-gray-50 min-h-screen py-12 relative">
@@ -114,7 +114,7 @@ export default function CarDetails() {
                 </div>
 
                 <div className="bg-blue-50 p-4 rounded-lg mb-8 border border-blue-100">
-                  <h3 className="font-bold text-blue-800 mb-2">Verity Finance Offer</h3>
+                  <h3 className="font-bold text-blue-800 mb-2">CS Smart Finserv Offer</h3>
                   <ul className="text-sm text-blue-700 space-y-1">
                     <li>• Interest rates starting at 8.75%</li>
                     <li>• Up to 100% On-Road Funding</li>

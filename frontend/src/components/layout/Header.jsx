@@ -50,12 +50,12 @@ export default function Header() {
   };
 
   const servicesLinks = [
-    { name: 'Home Loans', to: '/services/home-loan' },
     { name: 'Car Loans', to: '/services/car-loan' },
+    { name: 'Home Loans', to: '/services/home-loan' },
     { name: 'Used Car Loans', to: '/services/auto-loan/used' },
     { name: 'Personal Loans', to: '/services/personal-loan' },
     { name: 'Business Loans', to: '/services/business-loan' },
-    { name: 'Insurance', to: '/services/insurance' },
+    { name: 'General Insurance', to: '/services/insurance' },
   ];
 
   return (
@@ -66,7 +66,7 @@ export default function Header() {
           
           {/* 1. LOGO */}
           <Link to="/" className="flex-shrink-0 flex items-center gap-3">
-             <img className="h-10 w-auto" src="/logos/logo-verity.png" alt="Verity Finance" />
+             <img className="h-12 w-auto" src="/cs_logo.png" alt="CS Smart Finserv" />
           </Link>
 
           {/* 2. DESKTOP NAV */}

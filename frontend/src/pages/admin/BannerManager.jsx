@@ -61,7 +61,7 @@ export default function BannerManager() {
 
   return (
     <>
-      <Helmet><title>Banner Manager | Verity Finance Admin</title></Helmet>
+      <Helmet><title>Banner Manager | CS Smart Finserv Admin</title></Helmet>
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-3xl font-bold mb-8">Homepage Banner Manager</h1>
         

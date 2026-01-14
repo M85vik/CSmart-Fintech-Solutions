@@ -41,7 +41,7 @@ export default function AdminDashboard() {
   return (
     <>
       <Helmet>
-        <title>Admin Dashboard | Verity Finance</title>
+        <title>Admin Dashboard | CS SMART FINSERV</title>
       </Helmet>
 
       <div className="bg-brand-bg min-h-screen">

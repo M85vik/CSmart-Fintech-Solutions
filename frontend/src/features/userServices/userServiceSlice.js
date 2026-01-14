@@ -11,19 +11,29 @@ export const getMyServices = createAsyncThunk('userServices/getMy', async (_, th
     const response = await axios.get(API_URL + 'my', config);
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.message);
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
   }
 });
 
-// Create service (Admin)
+// Create service (Admin) - FIXED FOR FILE UPLOADS
 export const createUserService = createAsyncThunk('userServices/create', async (serviceData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.user.token;
-    const config = { headers: { Authorization: `Bearer ${token}` } };
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        // ⚠️ CRITICAL FIX: Explicitly set Content-Type to undefined.
+        // This overrides any global 'application/json' defaults and allows
+        // the browser to automatically set 'multipart/form-data; boundary=...'
+        'Content-Type': undefined, 
+      },
+    };
+
     const response = await axios.post(API_URL, serviceData, config);
     return response.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.message);
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
   }
 });
 
@@ -40,9 +50,20 @@ const userServiceSlice = createSlice({
         state.isLoading = false;
         state.services = action.payload;
       })
-      .addCase(createUserService.fulfilled, (state, action) => {
+      .addCase(getMyServices.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(createUserService.pending, (state) => { state.isLoading = true; })
+      .addCase(createUserService.fulfilled, (state) => {
           state.isLoading = false;
-          // We don't necessarily need to add it to state here if the admin is on a different page, but it helps
+          state.isError = false;
+      })
+      .addCase(createUserService.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
+          state.message = action.payload;
       });
   }
 });

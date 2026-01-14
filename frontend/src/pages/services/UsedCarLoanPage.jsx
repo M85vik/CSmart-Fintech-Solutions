@@ -137,9 +137,9 @@ const DocumentationSection = () => (
                         <List>
                             {[
                                 "Age: 21 to 65 years",
-                                "Salaried: Min Income ₹20k/month",
-                                "Self-Employed: Min Turnover ₹5L/year",
-                                "CIBIL Score: 650+",
+                                "Salaried: Min Income ₹30k/month",
+                                "Self-Employed: Min Income ₹5L/year",
+                                "CIBIL Score: 700+",
                                 "Employment: Min 1 year stability"
                             ].map((text, i) => (
                                 <ListItem key={i} sx={{ px: 0 }}>
@@ -203,8 +203,8 @@ const WhyChooseUs = () => (
             </Typography>
             <Grid container spacing={4} justifyContent="center">
                 {[
-                    { icon: <GroupsIcon sx={{ fontSize: 50 }} />, title: '11 Million+', sub: 'Happy Customers' },
-                    { icon: <AccountBalanceIcon sx={{ fontSize: 50 }} />, title: '30+ Years', sub: 'Of Trust & Legacy' },
+                    { icon: <GroupsIcon sx={{ fontSize: 50 }} />, title: '10K+', sub: 'Happy Customers' },
+                    { icon: <AccountBalanceIcon sx={{ fontSize: 50 }} />, title: '10+ Years', sub: 'Of Trust & Legacy' },
                     { icon: <SpeedIcon sx={{ fontSize: 50 }} />, title: '48 Hours', sub: 'Disbursal Time' },
                     { icon: <VerifiedUserIcon sx={{ fontSize: 50 }} />, title: 'Transparent', sub: 'No Hidden Fees' },
                 ].map((item, i) => (
@@ -381,7 +381,7 @@ const UsedCarLoanPage = () => {
                 <Button 
                 fullWidth variant="contained" size="large"
                 disabled={isLoading}
-                onClick={handleSubmit} // <--- CONNECTED HERE
+                onClick={handleSubmit} 
                 sx={{ mt: 3, bgcolor: ORANGE_MAIN, fontWeight: 'bold', py: 1.5, '&:hover': { bgcolor: ORANGE_LIGHT } }}
                 >
                 {isLoading ? 'Sending...' : 'Request Call Back'}

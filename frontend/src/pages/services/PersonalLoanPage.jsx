@@ -70,7 +70,7 @@ export default function PersonalLoanPage() {
   return (
     <>
       <Helmet>
-        <title>{activeTab === 'personal' ? 'Personal Loans' : 'Business Loans'} | Verity Finance Hub</title>
+        <title>{activeTab === 'personal' ? 'Personal Loans' : 'Business Loans'} | CS Smart Finserv Hub</title>
       </Helmet>
 
       <div className="bg-gray-50 min-h-screen">

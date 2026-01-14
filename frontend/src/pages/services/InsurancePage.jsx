@@ -47,7 +47,7 @@ const processSteps = [
 ];
 
 const insuranceFaqs = [
-    { question: "Why buy from Verity Finance?", answer: "We offer unbiased comparisons from 50+ insurers and handle your claims personally." },
+    { question: "Why buy from CS Smart Finserv?", answer: "We offer unbiased comparisons from 50+ insurers and handle your claims personally." },
     { question: "Difference between Term & Health?", answer: "Term insurance pays your family on death. Health insurance pays your hospital bills while alive." },
     { question: "Is the process completely online?", answer: "Yes! From quote to policy issuance, everything is digital and paperless." },
 ];

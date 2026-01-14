@@ -13,25 +13,25 @@ const leadership = [
   { 
     name: "Sushil Kumar Singh", 
     role: "CEO & Managing Director", 
-    image: "/photos/Sushil_Kumar_Singh.jpeg" // Updated
+    image: "/Sushil_Kumar_Singh.jpeg" // Updated
   },
-  { 
-    name: "Sachin Arora", 
-    role: "Director", 
-    image: "/photos/Sachin_Arora.jpeg" // Updated
-  },
-  { 
-    name: "Amar Kumar", 
-    role: "Director", 
-    image: "/photos/Amar_Kumar.jpeg" // Updated
-  },
+  // { 
+  //   name: "Sachin Arora", 
+  //   role: "Director", 
+  //   image: "/photos/Sachin_Arora.jpeg" // Updated
+  // },
+  // { 
+  //   name: "Amar Kumar", 
+  //   role: "Director", 
+  //   image: "/photos/Amar_Kumar.jpeg" // Updated
+  // },
 ];
 
 const stats = [
   { label: "Years of Trust", value: 10, suffix: "+" },
-  { label: "Happy Clients", value: 5000, suffix: "+" },
-  { label: "Team Strength", value: 35, suffix: "+" },
-  { label: "Partners", value: 50, suffix: "+" },
+  { label: "Happy Clients", value: 10000, suffix: "+" },
+  { label: "Team Strength", value: 45, suffix: "+" },
+  { label: "Channel Partners", value: 100, suffix: "+" },
 ];
 
 const partnerLogos = [
@@ -52,7 +52,7 @@ export default function About() {
   return (
     <>
       <Helmet>
-        <title>About Us | Verity Finance - The People Behind Your Dreams</title>
+        <title>About Us | CS Smart Finserv - The People Behind Your Dreams</title>
       </Helmet>
 
       <div className="bg-white min-h-screen font-sans overflow-x-hidden">
@@ -102,7 +102,7 @@ export default function About() {
                   The journey began on <strong>October 20, 2015</strong>. Our founder, <strong>Mr. Sushil Kumar Singh</strong>, observed a gap in the market: financing was complex, slow, and intimidating for the common man.
                 </p>
                 <p>
-                  With a vision to change this, <strong>CS Smart Finserve Pvt. Ltd.</strong> (Verity Finance) was born in <strong>Sector-16, Faridabad</strong>. Our mission was simple: make buying a dream car as easy as driving one.
+                  With a vision to change this, <strong>CS Smart Finserve Pvt. Ltd.</strong> (CS Smart Finserv) was born in <strong>Sector-16, Faridabad</strong>. Our mission was simple: make buying a dream car as easy as driving one.
                 </p>
                 <p className="font-medium text-gray-800 border-l-4 border-[#ff6d00] pl-4 italic">
                   Today, we are a family of 35+ experts serving over 5,000 happy families.
@@ -251,13 +251,13 @@ export default function About() {
                     className="bg-white p-4 rounded-2xl shadow-lg"
                 >
                     <div className="h-64 overflow-hidden rounded-xl mb-6 relative">
-                        <img src="/photos/faridabad-2.jpeg" alt="Faridabad Office Glass Door" className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500" />
+                        <img src="/faridabad-2.jpeg" alt="Faridabad Office Glass Door" className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500" />
                         <div className="absolute top-4 left-4 bg-white/90 backdrop-blur text-black px-3 py-1 rounded-full text-xs font-bold shadow-sm">
                             HEAD OFFICE
                         </div>
                     </div>
                     <h3 className="text-xl font-bold text-gray-900">Sector-16, Faridabad</h3>
-                    <p className="text-gray-500 text-sm mt-2">The birthplace of Verity Finance. Our central command.</p>
+                    <p className="text-gray-500 text-sm mt-2">The birthplace of CS Smart Finserv. Our central command.</p>
                 </motion.div>
             </div>
           </div>
