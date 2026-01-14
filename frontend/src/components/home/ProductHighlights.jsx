@@ -3,21 +3,6 @@ import AlternatingFeature from './AlternatingFeature';
 
 const products = [
   {
-    title: 'Home Loan',
-    subtitle: 'Turn your dream of owning a home into reality with our flexible and affordable home loans.',
-    features: [
-      'Competitive interest rates',
-      'Quick and easy online application',
-      'Flexible repayment options',
-      'Expert guidance at every step'
-    ],
-    // Replace with your illustration URL
-    imageUrl: '/hloan.jpg',
-    link: '/services/home-loan',
-    imageSide: 'left',
-    bgColor:"bg-brandPinkish"
-  },
-  {
     title: 'Car Loan',
     subtitle: 'Get behind the wheel of your new car faster than you think with our seamless financing.',
     features: [
@@ -33,13 +18,28 @@ const products = [
      bgColor:"bg-brandBeige"
   },
   {
+    title: 'Home Loan',
+    subtitle: 'Turn your dream of owning a home into reality with our flexible and affordable home loans.',
+    features: [
+      'Competitive interest rates',
+      'Quick and easy online application',
+      'Flexible repayment options',
+      'Expert guidance at every step'
+    ],
+    // Replace with your illustration URL
+    imageUrl: '/hloan.jpg',
+    link: '/services/home-loan',
+    imageSide: 'left',
+    bgColor:"bg-brandPinkish"
+  },
+  {
     title: 'Insurance',
     subtitle: 'Protect what matters most with our comprehensive and reliable insurance plans.',
     features: [
       'Health, Life, and Vehicle insurance',
       'Customizable plans to fit your needs',
       'Easy claims process',
-      '24/7 customer support'
+      'Rapid customer support'
     ],
     // Replace with your illustration URL
     imageUrl: '/ins.png',

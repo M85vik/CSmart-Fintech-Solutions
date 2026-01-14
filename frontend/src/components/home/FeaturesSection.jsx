@@ -6,7 +6,7 @@ import { FaFileSignature, FaFeatherAlt, FaShieldAlt, FaHeadset } from 'react-ico
 // Array of features to display
 const features = [
   {
-    name: '100% Paperless Process',
+    name: 'Express Approval',
     icon: FaFileSignature,
     description: 'Apply for loans and insurance from the comfort of your home, with no physical paperwork required.'
   },
@@ -21,7 +21,7 @@ const features = [
     description: 'Your data is protected with bank-grade security, ensuring your privacy and peace of mind.'
   },
   {
-    name: '24/7 Customer Support',
+    name: 'Rapid Customer Support',
     icon: FaHeadset,
     description: 'Our dedicated support team is always available to help you with any questions or concerns.'
   }
@@ -33,10 +33,10 @@ export default function FeaturesSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Why Verity Finance?
+            Why CS Smart Finserv?
           </h2>
           <p className="mt-4 text-lg leading-8 text-gray-700">
-            Verity Finance is a digital-first platform that provides simple, affordable, and accessible financial products and services.
+            CS Smart Finserv that provides simple, affordable, and accessible financial products and services.
           </p>
         </div>
         <div className="mt-16 max-w-xl mx-auto grid grid-cols-1 gap-y-12 md:max-w-none md:grid-cols-2 lg:grid-cols-4 md:gap-x-8">

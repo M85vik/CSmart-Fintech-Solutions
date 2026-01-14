@@ -21,6 +21,17 @@ const UserServiceSchema = new mongoose.Schema({
     enum: ['Active', 'Frozen', 'Closed'], 
     default: 'Active' 
   },
+
+  // Service Documents
+  documents: {
+    type: [
+      {
+        url: { type: String, required: true },
+        public_id: { type: String, required: true },
+      }
+    ],
+    default: [],
+  },
   
   nextDueDate: { type: Date }, 
   

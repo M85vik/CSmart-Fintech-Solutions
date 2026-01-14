@@ -42,7 +42,7 @@ export default function CarCatalogue() {
   return (
     <>
       <Helmet>
-        <title>Explore Dream Cars | Verity Finance</title>
+        <title>Explore Dream Cars | CS Smart Finserv</title>
         <meta name="description" content="Browse the latest cars, check on-road prices, and calculate your loan EMI instantly." />
       </Helmet>
 

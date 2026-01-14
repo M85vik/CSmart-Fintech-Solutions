@@ -333,7 +333,7 @@ function Blogs() {
               transition={{ duration: 0.7 }}
             >
               <h1 className="text-4xl sm:text-6xl font-extrabold text-dark tracking-tight">
-                Verity Finance-Pedia
+                CS Smart Finserv-Pedia
               </h1>
               <p className="mt-4 text-xl text-gray-600">
                 Simplifying Finance For Everyone.

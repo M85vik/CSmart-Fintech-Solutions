@@ -53,29 +53,29 @@ import { motion } from 'framer-motion';
 
 const services = [
     {
+        name: 'Car Loans',
+        link: '/services/car-loan',
+        description: 'Get behind the wheel faster with our quick approval process and attractive interest rates.',
+        imageUrl: 'https://plus.unsplash.com/premium_photo-1682089485470-4d575051f326?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2FyJTIwc2hvd3Jvb218ZW58MHx8MHx8fDA%3D',
+    },
+    {
         name: 'Home Loans',
         link: '/services/home-loan',
         description: 'Realize your dream of owning a home with our competitive and flexible loan options.',
         // Replace with a relevant illustration from unDraw, Storyset, etc.
-        imageUrl: 'https://images.unsplash.com/photo-1503256575996-7cbe509190b7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjQ2fHxRdW90ZXN8ZW58MHx8MHx8fDA%3D',
-    },
-    {
-        name: 'Car Loans',
-        link: '/services/car-loan',
-        description: 'Get behind the wheel faster with our quick approval process and attractive interest rates.',
-        imageUrl: 'https://images.unsplash.com/photo-1503256575996-7cbe509190b7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjQ2fHxRdW90ZXN8ZW58MHx8MHx8fDA%3D',
+        imageUrl: 'https://plus.unsplash.com/premium_photo-1661962841993-99a07c27c9f4?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aG91c2V8ZW58MHx8MHx8fDA%3D',
     },
     {
         name: 'Personal Loans',
         link: '/services/personal-loan',
         description: 'Fund your dreams, from weddings to vacations, with our versatile personal loan products.',
-        imageUrl: 'https://images.unsplash.com/photo-1503256575996-7cbe509190b7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjQ2fHxRdW90ZXN8ZW58MHx8MHx8fDA%3D',
+        imageUrl: 'https://plus.unsplash.com/premium_photo-1676550901098-ef91a54010af?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHZhY2F0aW9ufGVufDB8fDB8fHww',
     },
     {
         name: 'Insurance',
         link: '/services/insurance',
         description: 'Protect yourself and your loved ones with our comprehensive and affordable insurance plans.',
-        imageUrl: 'https://images.unsplash.com/photo-1503256575996-7cbe509190b7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjQ2fHxRdW90ZXN8ZW58MHx8MHx8fDA%3D',
+        imageUrl: 'https://media.istockphoto.com/id/1644459705/photo/parents-and-daughter-with-umbrella-against-white-background.webp?a=1&b=1&s=612x612&w=0&k=20&c=gjQd1fWAvWroaTLdKA5GkBIh9LYuztTxTb7dIpMxAiQ=',
     },
 ];
 

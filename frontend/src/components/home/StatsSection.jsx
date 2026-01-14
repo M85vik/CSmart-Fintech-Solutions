@@ -125,10 +125,10 @@ function AnimatedStat({ to, label, prefix = '', suffix = '' }) {
 export default function StatsSection() {
   // Use numbers for the 'to' value for the counter
   const stats = [
-    { to: 10, suffix: ' L+', label: 'Happy Customers' },
+    { to: 10, suffix: ' K+', label: 'Happy Customers' },
     { to: 25, suffix: ' K+', label: 'Loans Disbursed' },
     { to: 98, suffix: '%', label: 'Customer Satisfaction' },
-    { to: 5, suffix: '+', label: 'Years in Business' },
+    { to: 10, suffix: '+', label: 'Years in Business' },
   ];
 
   return (

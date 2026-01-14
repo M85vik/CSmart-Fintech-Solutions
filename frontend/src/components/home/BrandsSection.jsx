@@ -29,27 +29,25 @@ import { motion, AnimatePresence } from 'framer-motion';
 // In a real app, this might come from an API.
 // Each logo is tagged with the categories it belongs to.
 const allPartners = [
-  { name: 'Axis Bank', logoUrl: '/logos/axis.png', categories: ['Home Loan', 'Credit Card'] },
-  { name: 'CASHe', logoUrl: '/logos/axis.png', categories: ['Unsecured Loans'] },
-  { name: 'HDFC Bank', logoUrl: '/logos/hdfc.png', categories: ['Home Loan', 'Credit Card', 'Unsecured Loans'] },
-  { name: 'ICICI Bank', logoUrl: '/logos/icic.png', categories: ['Home Loan', 'Credit Card'] },
-  { name: 'Kotak', logoUrl: '/logos/axis.png', categories: ['Home Loan', 'Credit Bureau'] },
-  { name: 'Lendingkart', logoUrl: '/logos/axis.png', categories: ['Unsecured Loans'] },
-  { name: 'IndusInd Bank', logoUrl: '/logos/axis.png', categories: ['Credit Card'] },
-  { name: 'Standard Chartered', logoUrl: '/logos/axis.png', categories: ['Credit Improvement'] },
-  { name: 'Tata Capital', logoUrl: '/logos/axis.png', categories: ['Home Loan', 'Unsecured Loans'] },
-  { name: 'Yes Bank', logoUrl: '/logos/axis.png', categories: ['Credit Card'] },
-  { name: 'Flexiloans', logoUrl: '/logos/axis.png', categories: ['Unsecured Loans'] },
-  { name: 'Hero Fincorp', logoUrl: '/logos/axis.png', categories: ['Unsecured Loans'] },
+  { name: 'Axis Bank', logoUrl: '/logos/axis.png', categories: ['Secured Loans', 'Unsecured Loans'] },
+  { name: 'Cholamandalam', logoUrl: '/logos/cholamandalam.png', categories: ['Unsecured Loans'] },
+  { name: 'HDFC Bank', logoUrl: '/logos/hdfc.png', categories: ['Secured Loans', 'General Insurance', 'Unsecured Loans'] },
+  { name: 'ICICI Bank', logoUrl: '/logos/icic.png', categories: ['Secured Loans', 'General Insurance', 'Unsecured Loans'] },
+  { name: 'IDFC', logoUrl: '/logos/IDFC.jpg', categories: ['Secured Loans', 'Unsecured Loans'] },
+  { name: 'Indian-bank', logoUrl: '/logos/Indian-bank.avif', categories: ['Secured Loans'] },
+  { name: 'Poonawalla-Fincorp', logoUrl: '/logos/Poonawalla-Fincorp.webp', categories: ['Unsecured Loans'] },
+  { name: 'Punjab&Sindh', logoUrl: '/logos/Punjab&Sindh.png', categories: ['Secured Loans'] },
+  { name: 'Tata Capital', logoUrl: '/logos/tata-capital.webp', categories: ['General Insurance', 'Unsecured Loans'] },
+  { name: 'Yes Bank', logoUrl: '/logos/Yes-Bank.png', categories: ['Unsecured Loans', 'Secured Loans'] },
+  { name: 'BAJAJ', logoUrl: '/logos/bajaj-finserv.png', categories: ['Unsecured Loans', 'General Insurance'] },
+  { name: 'LIC', logoUrl: '/logos/lic.jpg', categories: ['General Insurance'] },
 ];
 
 const categories = [
   'All',
   'Unsecured Loans',
-  'Credit Card',
-  'Home Loan',
-  'Credit Bureau',
-  'Credit Improvement',
+  'General Insurance',
+  'Secured Loans',
 ];
 
 export default function BrandsSection() {

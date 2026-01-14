@@ -65,14 +65,14 @@ export default function Signup() {
 
   return (
       <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <Helmet><title>Sign Up | Verity Finance</title></Helmet>
+        <Helmet><title>Sign Up | CS Smart Finserv</title></Helmet>
         
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="sm:mx-auto sm:w-full sm:max-w-md text-center"
         >
-          <img className="mx-auto h-12 w-auto" src="/logos/logo-verity.svg" alt="Verity Finance" />
+          <img className="mx-auto h-12 w-auto" src="/logos/logo-verity.svg" alt="CS Smart Finserv" />
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Create your account</h2>
           <p className="mt-2 text-sm text-gray-600">Join thousands of financially smart users today</p>
         </motion.div>

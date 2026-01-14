@@ -35,7 +35,7 @@ export default function HomeLoanPage() {
   return (
     <>
       <Helmet>
-        <title>Home Loans | Check Eligibility & Offers | Verity Finance</title>
+        <title>Home Loans | Check Eligibility & Offers | CS Smart Finserv</title>
       </Helmet>
 
       <div className="bg-gray-50 min-h-screen font-sans">
@@ -156,7 +156,7 @@ export default function HomeLoanPage() {
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <DocCard num="01" title="KYC" desc="PAN Card, Aadhaar/Passport" />
-                            <DocCard num="02" title="Income" desc="3 Month Payslips / 2 Yr ITR" />
+                            <DocCard num="02" title="Income" desc="1 year Payslips / 2 Yr ITR" />
                             <DocCard num="03" title="Banking" desc="6 Month Bank Statement" />
                             <DocCard num="04" title="Property" desc="Agreement to Sale / Chain Docs" />
                         </div>

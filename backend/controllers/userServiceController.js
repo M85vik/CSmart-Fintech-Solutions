@@ -36,7 +36,8 @@ exports.getMyServices = async (req, res) => {
         }
         return service;
     }));
-    res.json(updatedServices);
+    const freshServices = await UserService.find({ user: req.user.id }).sort({ createdAt: -1 });
+    res.json(freshServices);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server Error' });
@@ -48,10 +49,12 @@ exports.createUserService = async (req, res) => {
   try {
     const { email, serviceType, provider, accountNumber, totalLoanAmount, emiAmount, paymentDay } = req.body;
     
-    // 1. Check for file upload (Cloudinary middleware puts it in req.file)
-    let documentUrl = '';
+    let documents = [];
     if (req.file) {
-      documentUrl = req.file.path;
+      documents.push({
+        url: req.file.path,
+        public_id: req.file.filename || req.file.originalname,
+      });
     }
 
     const user = await User.findOne({ email });
@@ -73,7 +76,7 @@ exports.createUserService = async (req, res) => {
       paymentDay,
       nextDueDate: firstDueDate,
       status: 'Active',
-      documentUrl // Save the URL
+      documents,
     });
 
     const createdService = await service.save();

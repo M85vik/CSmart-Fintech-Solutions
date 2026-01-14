@@ -8,7 +8,7 @@ const {
     toggleServiceStatus, 
     deleteUserService 
 } = require('../controllers/userServiceController');
-const { protect } = require('../middleware/authMiddleware');
+const { protect} = require('../middleware/authMiddleware');
 const upload = require('../config/cloudinary'); // Use your existing Cloudinary config
 
 // Public / User Routes

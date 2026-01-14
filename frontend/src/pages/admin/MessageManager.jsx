@@ -28,7 +28,7 @@ function MessageManager() {
   return (
     <>
       <Helmet>
-        <title>Contact Messages | Verity Finance Admin</title>
+        <title>Contact Messages | CS Smart Finserv Admin</title>
       </Helmet>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex justify-between items-center mb-8">

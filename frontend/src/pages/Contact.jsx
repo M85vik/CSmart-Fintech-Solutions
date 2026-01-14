@@ -45,8 +45,8 @@ function Contact() {
   return (
     <>
       <Helmet>
-        <title>Contact Us | Verity Finance Fintech</title>
-        <meta name="description" content="Get in touch with the Verity Finance team for inquiries about our loan and insurance services. We're here to help." />
+        <title>Contact Us | CS Smart Finserv</title>
+        <meta name="description" content="Get in touch with the CS Smart Finserv team for inquiries about our loan and insurance services. We're here to help." />
       </Helmet>
       
       <div className="relative bg-white overflow-hidden">
@@ -113,9 +113,9 @@ function Contact() {
             <div className="bg-brand-primary text-white p-8 rounded-2xl flex flex-col justify-center">
                 <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
                 <ul className="space-y-6">
-                  <li className="flex items-start"><FaMapMarkerAlt className="mt-1 mr-4 flex-shrink-0" size={20} /><address className="not-italic">123 Finance Street, Suite 100<br/>Metropolis, MP 54321</address></li>
-                  <li className="flex items-center"><FaPhoneAlt className="mr-4" size={20} /><a href="tel:+1234567890" className="hover:underline">(123) 456-7890</a></li>
-                  <li className="flex items-center"><FaEnvelope className="mr-4" size={20} /><a href="mailto:contact@Verity Finance.com" className="hover:underline">contact@Verity Finance.com</a></li>
+                  <li className="flex items-start"><FaMapMarkerAlt className="mt-1 mr-4 flex-shrink-0" size={20} /><address className="not-italic">2546, Sector-16,<br/>Faridabad, Haryana 121003</address></li>
+                  <li className="flex items-center"><FaPhoneAlt className="mr-4" size={20} /><a href="tel:+1234567890" className="hover:underline">9999423000</a></li>
+                  <li className="flex items-center"><FaEnvelope className="mr-4" size={20} /><a href="mailto:contact@CS Smart Finserv.com" className="hover:underline">sales@cssmartfinserve.com</a></li>
                 </ul>
             </div>
           </motion.div>
