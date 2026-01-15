@@ -9,7 +9,7 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Company Info */}
                     <div className="col-span-1 md:col-span-2 lg:col-span-1">
-                        <img src="/cs_logo.png" alt="CS Smart Finserv Logo" className="h-12 w-auto mb-4" />
+                        <img src="/cs_logo.png" alt="CS Smart Finserv Logo" className=" h-16 sm:h-20 md:h-20 w-auto object-contain" />
                         <p className="text-gray-400">Your trusted partner for modern financial solutions, simplifying your journey to financial freedom.</p>
                         <div className="flex space-x-4 mt-6">
                             <a href="https://www.instagram.com/cs.smartfinserve?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-gray-400 hover:text-white"><FaInstagram size={20} /></a>
