@@ -144,7 +144,7 @@ export default function About() {
           <div className="container mx-auto px-4 relative z-10 text-white">
             <div className="text-center mb-16">
               <span className="text-[#ff6d00] font-bold tracking-widest uppercase text-sm">Our Culture</span>
-              <h2 className="text-4xl md:text-5xl font-bold mt-2">The Soul of Verity</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mt-2">The Soul of CS Smart Finserve</h2>
               <p className="text-gray-300 mt-4 max-w-2xl mx-auto">
                 We are not just a company; we are a family. Every loan we process helps a family realize their dream.
               </p>
