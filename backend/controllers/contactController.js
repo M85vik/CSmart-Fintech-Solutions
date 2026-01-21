@@ -18,7 +18,7 @@ exports.createContact = async (req, res) => {
     await contact.save();
 
     // 2. Prepare Email Data
-    const adminEmail = process.env.ADMIN_EMAIL || 'your-admin-email@example.com'; // Set this in .env!
+    const adminEmail = process.env.ADMIN_EMAIL || 'harshvardhankumarmishra@gmail.com'; // Set this in .env!
 
     // 3. Queue Email to ADMIN (New Lead Alert)
     enqueueEmail(async () => {

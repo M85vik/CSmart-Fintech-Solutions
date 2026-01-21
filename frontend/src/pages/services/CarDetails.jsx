@@ -16,6 +16,9 @@ import StoreIcon from '@mui/icons-material/Store';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import { submitContactForm } from '../../features/contacts/contactSlice';
+import toast from 'react-hot-toast';
 // Added FaFileAlt to imports
 import { FaArrowLeft, FaCheckCircle, FaShieldAlt, FaRoad, FaCogs, FaFileAlt } from 'react-icons/fa';
 import EmiCalculator from '../../components/services/EmiCalculator';
@@ -50,7 +53,7 @@ export default function CarDetails() {
   return (
     <>
       <Helmet>
-        <title>{`${car.make} ${car.model} Loan Offers | CS Smart Finserv`}</title>
+        <title>{`${car.make} ${car.model} Loan Offers | CS Smart Finserve`}</title>
       </Helmet>
 
       <div className="bg-gray-50 min-h-screen py-12 relative">
@@ -114,7 +117,7 @@ export default function CarDetails() {
                 </div>
 
                 <div className="bg-blue-50 p-4 rounded-lg mb-8 border border-blue-100">
-                  <h3 className="font-bold text-blue-800 mb-2">CS Smart Finserv Offer</h3>
+                  <h3 className="font-bold text-blue-800 mb-2">CS Smart Finserve Offer</h3>
                   <ul className="text-sm text-blue-700 space-y-1">
                     <li>• Interest rates starting at 8.75%</li>
                     <li>• Up to 100% On-Road Funding</li>
@@ -235,10 +238,65 @@ const CallbackModal = ({ open, onClose }) => (
     </Dialog>
 );
 
+// --- CORRECTED COMPONENT ---
+// Replace the old TestDriveScheduler at the bottom of your file with this:
+
 const TestDriveScheduler = ({ open, onClose, carName }) => {
+  // 1. ADD REDUX HOOKS
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.contact);
+
+  // 2. FORM STATE
   const [preference, setPreference] = useState('doorstep');
   const [city, setCity] = useState('');
+  const [formData, setFormData] = useState({
+      name: '',
+      phone: '',
+      date: '',
+      time: '',
+      locality: ''
+  });
+
   const ncrCities = ['New Delhi', 'Gurgaon', 'Noida', 'Ghaziabad', 'Faridabad', 'Greater Noida'];
+
+  // 3. HANDLE INPUT CHANGE
+  const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // 4. SUBMIT HANDLER (The missing piece!)
+  const handleSubmit = async () => {
+      // Basic Validation
+      if (!formData.name || !formData.phone || !formData.date) {
+          toast.error("Please fill in Name, Phone, and Date.");
+          return;
+      }
+
+      // Format the message for the Admin
+      const locationDetails = preference === 'doorstep' 
+          ? `Doorstep at: ${formData.locality}, ${city}` 
+          : 'Visit Showroom';
+
+      const submissionData = {
+          name: formData.name,
+          phone: formData.phone,
+          email: 'N/A', // Optional but required by schema
+          serviceOfInterest: `Test Drive: ${carName}`,
+          message: `Request for Test Drive.\nDate: ${formData.date} at ${formData.time}\nPreference: ${locationDetails}`
+      };
+
+      // Send to Backend
+      const result = await dispatch(submitContactForm(submissionData));
+
+      if (!result.error) {
+          toast.success("Test Drive Booked! We'll call you shortly.");
+          // Clear form and close
+          setFormData({ name: '', phone: '', date: '', time: '', locality: '' });
+          onClose();
+      } else {
+          toast.error("Booking Failed. Please try again.");
+      }
+  };
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: 4 } }}>
@@ -251,7 +309,10 @@ const TestDriveScheduler = ({ open, onClose, carName }) => {
         </Box>
         <IconButton onClick={onClose} sx={{ color: '#fff' }}><CloseIcon /></IconButton>
       </DialogTitle>
+      
       <DialogContent sx={{ mt: 2 }}>
+        
+        {/* Preference Selection */}
         <Box sx={{ mb: 4, mt: 1 }}>
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
                 <LocationOnIcon sx={{ color: '#ff6d00', mr: 1 }} />
@@ -296,27 +357,43 @@ const TestDriveScheduler = ({ open, onClose, carName }) => {
                 </Grid>
             </RadioGroup>
         </Box>
+
+        {/* Date & Time */}
         <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
             <AccessTimeIcon sx={{ color: '#ff6d00', mr: 1 }} />
             When works best for you?
         </Typography>
         <Grid container spacing={2} sx={{ mb: 4 }}>
             <Grid item xs={6}>
-                <TextField type="date" fullWidth size="small" InputLabelProps={{ shrink: true }} label="Preferred Date" />
+                <TextField 
+                    name="date" value={formData.date} onChange={handleChange}
+                    type="date" fullWidth size="small" InputLabelProps={{ shrink: true }} label="Preferred Date" 
+                />
             </Grid>
             <Grid item xs={6}>
-                <TextField type="time" fullWidth size="small" InputLabelProps={{ shrink: true }} label="Preferred Time" />
+                <TextField 
+                    name="time" value={formData.time} onChange={handleChange}
+                    type="time" fullWidth size="small" InputLabelProps={{ shrink: true }} label="Preferred Time" 
+                />
             </Grid>
         </Grid>
+
+        {/* Contact Details */}
         <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
             Confirm your details
         </Typography>
         <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-                <TextField fullWidth label="Your Name" variant="outlined" size="small" />
+                <TextField 
+                    name="name" value={formData.name} onChange={handleChange}
+                    fullWidth label="Your Name" variant="outlined" size="small" 
+                />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <TextField fullWidth label="Phone Number" variant="outlined" size="small" />
+                <TextField 
+                    name="phone" value={formData.phone} onChange={handleChange}
+                    fullWidth label="Phone Number" variant="outlined" size="small" type="tel"
+                />
             </Grid>
             {preference === 'doorstep' && (
                 <>
@@ -333,19 +410,26 @@ const TestDriveScheduler = ({ open, onClose, carName }) => {
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField fullWidth label="Locality / Sector" variant="outlined" size="small" />
+                        <TextField 
+                            name="locality" value={formData.locality} onChange={handleChange}
+                            fullWidth label="Locality / Sector" variant="outlined" size="small" 
+                        />
                     </Grid>
                 </>
             )}
         </Grid>
+
+        {/* Submit Button */}
         <Box sx={{ mt: 4, textAlign: 'center' }}>
              <Button 
                 variant="contained" 
                 fullWidth 
                 size="large"
+                disabled={isLoading}
+                onClick={handleSubmit} // <--- CONNECTED!
                 sx={{ bgcolor: '#ff6d00', fontWeight: 'bold', py: 1.5, '&:hover': { bgcolor: '#e65100' } }}
             >
-                Confirm Test Drive
+                {isLoading ? 'Booking...' : 'Confirm Test Drive'}
             </Button>
             <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
                 Our team will call you within 30 minutes to confirm the slot.
