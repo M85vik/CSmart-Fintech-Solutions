@@ -15,8 +15,8 @@ export default function Home() {
 
   const homepageFaqs = [
     {
-      question: "What types of loans does CS Smart Finserv offer?",
-      answer: "CS Smart Finserv offers a wide range of financial products, including Home Loans, Car Loans, Personal Loans, and Business Loans to suit your various needs."
+      question: "What types of loans does CS Smart Finserve offer?",
+      answer: "CS Smart Finserve offers a wide range of financial products, including Home Loans, Car Loans, Personal Loans, and Business Loans to suit your various needs."
     },
     {
       question: "How do I apply for a loan?",
@@ -31,8 +31,8 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>CS Smart Finserv | Simple & Transparent Loans and Insurance</title>
-        <meta name="description" content="CS Smart Finserv offers a wide choice of financial products like loans and insurance through a simple, paperless process. Check your free credit score instantly." />
+        <title>CS Smart Finserve | Simple & Transparent Loans and Insurance</title>
+        <meta name="description" content="CS Smart Finserve offers a wide choice of financial products like loans and insurance through a simple, paperless process. Check your free credit score instantly." />
       </Helmet>
       
       <HeroCarousel /> 

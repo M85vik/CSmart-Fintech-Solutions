@@ -48,7 +48,7 @@ export default function Footer() {
             </div>
             <div className="bg-gray-900 py-4">
                 <div className="container mx-auto text-center text-gray-500">
-                    <p>&copy; {new Date().getFullYear()} CS Smart Finserv. All Rights Reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} CS Smart Finserve. All Rights Reserved.</p>
                 </div>
             </div>
         </footer>
