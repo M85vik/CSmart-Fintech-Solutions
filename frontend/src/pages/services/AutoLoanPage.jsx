@@ -31,7 +31,7 @@ const HeroSection = ({ onApply, onNavigate }) => (
     bgcolor: '#000',
     color: '#fff',
     pt: { xs: 8, md: 15 },
-    pb: { xs: 20, md: 25 },
+    pb: { xs: 8, md: 30 },
     overflow: 'visible'
   }}>
     <Box sx={{
@@ -72,16 +72,28 @@ const HeroSection = ({ onApply, onNavigate }) => (
       </Box>
     </Container>
     {/* THE 3 PATHS */}
-    <Box sx={{
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      width: '100%',
-      transform: 'translateY(40%)',
-      zIndex: 10
-    }}>
-      <Container maxWidth="blg">
-        <Grid container spacing={3}>
+    <Box
+      sx={{
+        position: { xs: 'relative', md: 'absolute' },
+        left: 0,
+        right: 0,
+        bottom: { md: -30 },
+        display: 'flex',
+        justifyContent: 'center',
+        zIndex: 10,
+      }}
+    >
+      <Container maxWidth="lg" sx={{ maxWidth: 1200 }}>
+        <Grid
+          container
+          spacing={3}
+          justifyContent="center"
+          alignItems="stretch"
+          sx={{
+            px: { xs: 2, sm: 0 },
+            flexWrap: { xs: 'wrap', md: 'nowrap' }
+          }}
+        >
           {[
             {
               title: 'New Car Loan',
@@ -102,7 +114,7 @@ const HeroSection = ({ onApply, onNavigate }) => (
               path: '/services/auto-loan/refinance'
             }
           ].map((item, index) => (
-            <Grid item xs={12} md={4} key={index}>
+            <Grid item xs={12} sm={6} md={4} sx={{ minWidth: { md: 340 } }} key={index}>
               <Card
                 onClick={() => onNavigate(item.path)}
                 sx={{
@@ -111,10 +123,14 @@ const HeroSection = ({ onApply, onNavigate }) => (
                   borderRadius: 3,
                   boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
                   textAlign: 'center',
-                  p: 1,
+                  p: { xs: 2, md: 1 },
                   cursor: 'pointer',
-                  transition: 'transform 0.3s',
-                  '&:hover': { transform: 'translateY(-8px)', borderBottom: `5px solid ${ORANGE_MAIN}` }
+                  transition: 'all 0.3s ease',
+                  height: '100%',
+                  '&:hover': {
+                    transform: { md: 'translateY(-8px)' },
+                    borderBottom: `5px solid ${ORANGE_MAIN}`
+                  }
                 }}
               >
                 <CardContent>
@@ -128,6 +144,8 @@ const HeroSection = ({ onApply, onNavigate }) => (
         </Grid>
       </Container>
     </Box>
+    {/* Spacer to reserve space for overlapping cards */}
+    <Box sx={{ height: { xs: 0, md: 180 } }} />
   </Box>
 );
 
@@ -303,9 +321,6 @@ const AutoLoanPage = () => {
         onApply={() => setOpenCallback(true)}
         onNavigate={(path) => navigate(path)}
       />
-      <br />
-      <br />
-      <br />
       {/* 2. Grand Calculator (Connected Apply Button) */}
       <Container maxWidth="md" sx={{ my: 8 }}>
         <EmiCalculator loanType="car" onApply={() => setOpenCallback(true)} />
