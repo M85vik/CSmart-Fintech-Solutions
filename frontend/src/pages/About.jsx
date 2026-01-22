@@ -13,7 +13,8 @@ const leadership = [
   { 
     name: "Sushil Kumar Singh", 
     role: "CEO & Managing Director", 
-    image: "/Sushil_Kumar_Singh.jpeg" // Updated
+    image: "/Sushil_Kumar_Singh.jpeg",
+    bio: "Mr. Sushil Kumar Singh is the visionary founder and driving force behind CS Smart Finserve Pvt. Ltd. With over a decade of hands-on experience in the auto-finance and financial services industry, he is known for building customer-first systems rooted in transparency, speed, and trust. Under his leadership, CS Smart Finserve has grown from a single office in Faridabad into a respected financial services brand across North India. His philosophy is simple: finance should empower dreams, not complicate them."
   },
   // { 
   //   name: "Sachin Arora", 
@@ -52,7 +53,7 @@ export default function About() {
   return (
     <>
       <Helmet>
-        <title>About Us | CS Smart Finserv - The People Behind Your Dreams</title>
+        <title>About Us | CS Smart Finserve - The People Behind Your Dreams</title>
       </Helmet>
 
       <div className="bg-white min-h-screen font-sans overflow-x-hidden">
@@ -213,7 +214,7 @@ export default function About() {
             </motion.div>
 
             {/* Individual Cards */}
-            <div className="grid md:grid-cols-3 gap-10">
+            <div className="grid md:grid-cols-1 gap-10">
               {leadership.map((leader, index) => (
                 <LeadershipCard key={index} {...leader} delay={index * 0.2} />
               ))}
