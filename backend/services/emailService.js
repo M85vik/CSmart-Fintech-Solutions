@@ -98,7 +98,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 async function sendEmail({ to, subject, html }) {
   try {
     const data = await resend.emails.send({
-      from: "Verity by CSmart <no-reply@vikasharma.online>",
+      from: "Verity by CSSmart <no-reply@vikasharma.online>",
       to,
       subject,
       html,

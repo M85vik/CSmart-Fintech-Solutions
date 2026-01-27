@@ -77,7 +77,7 @@ const HeroSection = ({ onApply, onNavigate }) => (
         position: { xs: 'relative', md: 'absolute' },
         left: 0,
         right: 0,
-        bottom: { md: -30 },
+        bottom: { md: -10 },
         display: 'flex',
         justifyContent: 'center',
         zIndex: 10,

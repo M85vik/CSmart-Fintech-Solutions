@@ -4,7 +4,7 @@ const {sendEmail} = require('./emailService.js');
   try {
     const response = await sendEmail({
       to: ["vikas.sharma0b@gmail.com"],
-      subject: "Verify Team",
+      subject: "CSSMART Team",
       html: "<h2>Email sent successfully 🚀</h2>",
      
     });
