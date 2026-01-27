@@ -50,7 +50,7 @@ export default function Header() {
   };
 
   const servicesLinks = [
-    { name: 'Car Loans', to: '/services/car-loan' },
+    { name: 'Auto Loans', to: '/services/car-loan' },
     { name: 'Home Loans', to: '/services/home-loan' },
     { name: 'Used Car Loans', to: '/services/auto-loan/used' },
     { name: 'Personal Loans', to: '/services/personal-loan' },

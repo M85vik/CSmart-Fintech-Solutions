@@ -1,6 +1,7 @@
 const Contact = require('../models/Contact');
 const { enqueueEmail } = require('../utils/emailQueue');
 const { buildInternalLeadHTML, buildCustomerConfirmationHTML } = require('../utils/emailTemplates');
+const sendEmail = require('../services/emailService');
 
 // @desc    Create a new contact submission & Send Emails
 // @route   POST /api/contacts
@@ -22,24 +23,32 @@ exports.createContact = async (req, res) => {
 
     // 3. Queue Email to ADMIN (New Lead Alert)
     enqueueEmail(async () => {
-      const { sendEmail } = require('../utils/emailService');
-      await sendEmail({
-        to: [adminEmail],
-        subject: `🚀 New Lead: ${serviceOfInterest} - ${name}`,
-        html: buildInternalLeadHTML({ name, email, phone, service: serviceOfInterest, message }),
-      });
+      try {
+        await sendEmail({
+          to: [adminEmail],
+          subject: `🚀 New Lead: ${serviceOfInterest} - ${name}`,
+          html: buildInternalLeadHTML({ name, email, phone, service: serviceOfInterest, message }),
+        });
+        console.log('✅ Admin email queued successfully');
+      } catch (err) {
+        console.error('❌ Admin email failed:', err);
+      }
     });
 
     // 4. Queue Email to CUSTOMER (Confirmation)
     // Only send if email is valid
     if (email && email.includes('@')) {
       enqueueEmail(async () => {
-        const { sendEmail } = require('../utils/emailService');
-        await sendEmail({
-          to: [email],
-          subject: `We received your request for ${serviceOfInterest} - Verity Finance`,
-          html: buildCustomerConfirmationHTML({ name, service: serviceOfInterest }),
-        });
+        try {
+          await sendEmail({
+            to: [email],
+            subject: `We received your request for ${serviceOfInterest} - Verity Finance`,
+            html: buildCustomerConfirmationHTML({ name, service: serviceOfInterest }),
+          });
+          console.log('✅ Customer email queued successfully');
+        } catch (err) {
+          console.error('❌ Customer email failed:', err);
+        }
       });
     }
 

@@ -30,7 +30,7 @@ export default function CarCatalogue() {
   }, []);
 
   // Filtering Logic
-  const categories = ['All', 'SUV', 'Sedan', 'Hatchback', 'EV'];
+  const categories = ['All', 'SUV', 'Sedan', 'Hatchback', 'EV', 'Luxury', 'MUV'];
   
   const filteredVehicles = vehicles.filter(vehicle => {
     const matchesCategory = filter === 'All' || vehicle.category === filter;
@@ -59,12 +59,12 @@ export default function CarCatalogue() {
           <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 bg-white p-4 rounded-xl shadow-sm">
             
             {/* Category Tabs */}
-            <div className="flex space-x-2 overflow-x-auto pb-2 md:pb-0">
+            <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full justify-start md:justify-center scrollbar-hide px-1">
               {categories.map(cat => (
                 <button
                   key={cat}
                   onClick={() => setFilter(cat)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
+                  className={`flex-shrink-0 whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
                     filter === cat 
                       ? 'bg-brand-primary text-white shadow-md' 
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
